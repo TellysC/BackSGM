@@ -16,6 +16,8 @@ import java.time.OffsetDateTime;
 @NoArgsConstructor
 @Data
 @EntityListeners(AuditingEntityListener.class)
+@SQLDelete(sql = "UPDATE equipamentos SET deleted_at = NOW() WHERE id = ?" )
+@Where(clause = "deleted_at IS NULL")
 public class Equipamento {
 
     @Id
@@ -30,7 +32,6 @@ public class Equipamento {
     @UpdateTimestamp
     private OffsetDateTime updatedAt;
 
-    @Where(clause = "deleted_at IS NULL")
     private OffsetDateTime deletedAt;
 
 }
