@@ -1,8 +1,7 @@
 package com.exemple.maintenance_system_api.domain.equipment.model.dto;
 
-import java.sql.Timestamp;
 
-public record EquipamentoUpdateDTO(String nome, String descricao, Timestamp deleteAt) {
+public record EquipamentoUpdateDTO(String nome, String descricao) {
 
     public EquipamentoUpdateDTO {
         if (nome == null || nome.isBlank()) {
