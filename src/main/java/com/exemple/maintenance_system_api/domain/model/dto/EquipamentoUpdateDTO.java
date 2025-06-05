@@ -1,4 +1,4 @@
-package com.exemple.maintenance_system_api.domain.equipment.model.dto;
+package com.exemple.maintenance_system_api.domain.model.dto;
 
 
 public record EquipamentoUpdateDTO(String nome, String descricao) {

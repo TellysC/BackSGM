@@ -1,30 +1,32 @@
-package com.exemple.maintenance_system_api.domain.equipment.model;
+package com.exemple.maintenance_system_api.domain.model;
 
 import jakarta.persistence.*;
-import jakarta.persistence.Table;
 import lombok.Data;
-import org.hibernate.annotations.*;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.annotations.Where;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 import java.time.OffsetDateTime;
 
-
-@Getter
 @Entity
-@Table(name = "equipamentos")
+@Table(name = "contato")
 @NoArgsConstructor
 @Data
 @EntityListeners(AuditingEntityListener.class)
 @SQLDelete(sql = "UPDATE equipamentos SET deleted_at = NOW() WHERE id = ?" )
 @Where(clause = "deleted_at IS NULL")
-public class Equipamento {
+public class Contato {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private String nome;
-    private String descricao;
+    private int telefone;
+    private int celular;
+    @ManyToOne
+    private CodigoDistancia codigoDistancia;
 
     @CreationTimestamp
     private OffsetDateTime createdAt;
@@ -33,5 +35,4 @@ public class Equipamento {
     private OffsetDateTime updatedAt;
 
     private OffsetDateTime deletedAt;
-
 }
