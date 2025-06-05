@@ -1,8 +1,8 @@
 package com.exemple.maintenance_system_api.services;
 
-import com.exemple.maintenance_system_api.domain.equipment.model.Equipamento;
-import com.exemple.maintenance_system_api.domain.equipment.model.dto.EquipamentoCreateDTO;
-import com.exemple.maintenance_system_api.domain.equipment.model.dto.EquipamentoUpdateDTO;
+import com.exemple.maintenance_system_api.domain.model.Equipamento;
+import com.exemple.maintenance_system_api.domain.model.dto.EquipamentoCreateDTO;
+import com.exemple.maintenance_system_api.domain.model.dto.EquipamentoUpdateDTO;
 import com.exemple.maintenance_system_api.excption.IdException;
 import com.exemple.maintenance_system_api.repositories.EquipamentoRepository;
 import jakarta.transaction.Transactional;
