@@ -12,7 +12,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.time.OffsetDateTime;
 
 @Entity
-@Table(name = "codigo_distancia")
+@Table(name = "codigo_Distancia")
 @NoArgsConstructor
 @Data
 @EntityListeners(AuditingEntityListener.class)
