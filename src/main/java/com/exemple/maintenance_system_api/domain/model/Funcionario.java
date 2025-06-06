@@ -25,7 +25,7 @@ public class Funcionario {
     private long id;
     private String nome;
     private String cargo;
-    private String cpf;
+    private int cpf;
 
     @OneToOne
     private Usuario usuario;

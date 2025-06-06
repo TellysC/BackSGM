@@ -6,7 +6,7 @@ CREATE TABLE enderecos (
     cidade VARCHAR(255) NOT NULL,
     estado VARCHAR(255) NOT NULL,
     pais VARCHAR(50) NOT NULL,
-    cep VARCHAR(50) NOT NULL,
+    cep INT NOT NULL,
     created_at TIMESTAMP NOT NULL,
     updated_at TIMESTAMP NOT NULL,
     deletad_at TIMESTAMP

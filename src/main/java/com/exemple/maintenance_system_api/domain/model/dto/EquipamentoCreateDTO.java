@@ -10,7 +10,7 @@ public record EquipamentoCreateDTO(String nome, String descricao) {
         }
         if (descricao == null || descricao.isBlank()) {
             throw new FieldException("Descrição não pode está em branco!");
-        }
+        }  
     }
 
 }
