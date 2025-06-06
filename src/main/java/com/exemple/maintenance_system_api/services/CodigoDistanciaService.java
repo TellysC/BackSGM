@@ -40,14 +40,13 @@ public class CodigoDistanciaService {
 
     }
 
-    public CodigoDistancia deletar(long id) {
+    public void deletar(Long id) {
         if(!codigoDistanciaRepository.existsById(id)) {
             log.error("Equipamento não encontrado com o id {}", id);
             throw new IdException("Equipamento não encontrado");
         }
         log.info("Deleting budget with id {}", id);
         codigoDistanciaRepository.deleteById(id);
-        return null;
     }
 
     public CodigoDistancia buscar(Long id) {
