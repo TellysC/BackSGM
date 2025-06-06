@@ -30,8 +30,8 @@ public class CodigoDistanciaController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<CodigoDistancia> deletar(@PathVariable long id) {
-        CodigoDistancia codigoDistancia = codigoDistanciaService.deletar(id);
+    public ResponseEntity<Void> deletar(@PathVariable long id) {
+        codigoDistanciaService.deletar(id);
         return ResponseEntity.noContent().build();
     }
 

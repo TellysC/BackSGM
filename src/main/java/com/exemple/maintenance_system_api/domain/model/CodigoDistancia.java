@@ -12,11 +12,11 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.time.OffsetDateTime;
 
 @Entity
-@Table(name = "codigo_Distancia")
+@Table(name = "codigo_distancia")
 @NoArgsConstructor
 @Data
 @EntityListeners(AuditingEntityListener.class)
-@SQLDelete(sql = "UPDATE equipamentos SET deleted_at = NOW() WHERE id = ?" )
+@SQLDelete(sql = "UPDATE codigo_distancia SET deleted_at = NOW() WHERE id = ?" )
 @Where(clause = "deleted_at IS NULL")
 public class CodigoDistancia {
 

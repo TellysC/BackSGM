@@ -8,6 +8,6 @@ CREATE TABLE contatos (
     updated_at TIMESTAMP NOT NULL,
     deleted_at TIMESTAMP,
     fk_Codigo_Distacia_Id INT NOT NULL,
-    FOREIGN KEY (fk_Codigo_Distacia_Id) REFERENCES codigo_Distacia (id)
+    FOREIGN KEY (fk_Codigo_Distacia_Id) REFERENCES codigo_distancia (id)
 
 );

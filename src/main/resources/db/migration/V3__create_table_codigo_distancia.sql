@@ -1,4 +1,4 @@
-CREATE TABLE codigo_Distacia (
+CREATE TABLE codigo_distancia (
     id INT AUTO_INCREMENT PRIMARY KEY,
     numero INT NOT NULL,
     estado INT NOT NULL,
