@@ -23,7 +23,7 @@ public class CodigoDistancia {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private String número;
+    private int numero;
     private String estado;
 
     @CreationTimestamp

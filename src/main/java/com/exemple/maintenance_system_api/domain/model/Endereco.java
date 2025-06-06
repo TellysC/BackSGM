@@ -27,7 +27,7 @@ public class Endereco {
     private String bairro;
     private String cidade;
     private String estado;
-    private String cep;
+    private int cep;
     private String país;
 
     @CreationTimestamp
