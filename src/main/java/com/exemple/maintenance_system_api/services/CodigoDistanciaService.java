@@ -19,22 +19,22 @@ public class CodigoDistanciaService {
     private final CodigoDistanciaRepository codigoDistanciaRepository;
 
     @Transactional
-    public CodigoDistancia criar(CodigoDistanciaCreateDTO dto) {
+    public CodigoDistancia criar(CodigoDistanciaCreateDTO codigoDistanciaCreateDTO) {
         CodigoDistancia codigoDistancia = new CodigoDistancia();
 
-        codigoDistancia.setEstado(dto.estado());
-        codigoDistancia.setNumero(dto.numero());
+        codigoDistancia.setEstado(codigoDistanciaCreateDTO.estado());
+        codigoDistancia.setNumero(codigoDistanciaCreateDTO.numero());
 
-        log.info("Criando código de distância com estado: {} e número: {}", dto.estado(), dto.numero());
+        log.info("Criando código de distância com estado: {} e número: {}", codigoDistanciaCreateDTO.estado(), codigoDistanciaCreateDTO.numero());
 
         return codigoDistanciaRepository.save(codigoDistancia);
     }
 
     @Transactional
-    public CodigoDistancia atualizar(long id, CodigoDistanciaUpdateDTO dto) {
+    public CodigoDistancia atualizar(long id, CodigoDistanciaUpdateDTO codigoDistanciaUpdateDTO) {
         CodigoDistancia codigoDistancia = codigoDistanciaRepository.findById(id).orElseThrow(() -> new IdException("Equipamento não encontrado"));
-        codigoDistancia.setEstado(dto.estado());
-        codigoDistancia.setNumero(dto.numero());
+        codigoDistancia.setEstado(codigoDistanciaUpdateDTO.estado());
+        codigoDistancia.setNumero(codigoDistanciaUpdateDTO.numero());
 
         return codigoDistanciaRepository.save(codigoDistancia);
 
@@ -43,19 +43,19 @@ public class CodigoDistanciaService {
     public void deletar(Long id) {
         if(!codigoDistanciaRepository.existsById(id)) {
             log.error("Equipamento não encontrado com o id {}", id);
-            throw new IdException("Equipamento não encontrado");
+            throw new IdException("Codigo distancia não encontrado");
         }
         log.info("Deleting budget with id {}", id);
         codigoDistanciaRepository.deleteById(id);
     }
 
     public CodigoDistancia buscar(Long id) {
-        log.info("Buscando equipamento com o id {}", id);
-        return codigoDistanciaRepository.findById(id).orElseThrow(() -> new IdException("Equipamento não encontrado"));
+        log.info("Buscando Codigo Distancia com o id {}", id);
+        return codigoDistanciaRepository.findById(id).orElseThrow(() -> new IdException("Código Distancia não encontrado"));
     }
 
     public List<CodigoDistancia> listar() {
-        log.info("Listando todos os equipamentos");
+        log.info("Listando todos os Códigos Distancia");
         return codigoDistanciaRepository.findAll();
     }
 }

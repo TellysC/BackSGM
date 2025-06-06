@@ -12,7 +12,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/CodigoDistancia")
+@RequestMapping("/codigo-distancia")
 public class CodigoDistanciaController {
 
     private final CodigoDistanciaService codigoDistanciaService;
