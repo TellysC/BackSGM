@@ -25,7 +25,9 @@ public class Contato {
     private long id;
     private int telefone;
     private int celular;
+
     @ManyToOne
+    @JoinColumn(name = "fk_codigo_distacia_id", nullable = false)
     private CodigoDistancia codigoDistancia;
 
     @CreationTimestamp

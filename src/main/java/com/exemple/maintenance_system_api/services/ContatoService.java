@@ -1,13 +1,16 @@
 package com.exemple.maintenance_system_api.services;
 
+import com.exemple.maintenance_system_api.domain.model.CodigoDistancia;
 import com.exemple.maintenance_system_api.domain.model.Contato;
 import com.exemple.maintenance_system_api.domain.model.dto.ContatoCreateDTO;
 import com.exemple.maintenance_system_api.domain.model.dto.ContatoUpdateDTO;
 import com.exemple.maintenance_system_api.excption.IdException;
+import com.exemple.maintenance_system_api.repositories.CodigoDistanciaRepository;
 import com.exemple.maintenance_system_api.repositories.ContatoRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,7 +19,11 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 public class ContatoService {
+
+    @Autowired
     private ContatoRepository contatoRepository;
+    @Autowired
+    private CodigoDistanciaRepository codigoDistanciaRepository;
 
     @Transactional
     public Contato criar(ContatoCreateDTO contatoCreateDTO){
@@ -26,6 +33,9 @@ public class ContatoService {
         contato.setTelefone(contatoCreateDTO.telefone());
 
         log.info("Criando contato com celular: {} e telefone: {}", contatoCreateDTO.celular(), contatoCreateDTO.telefone());
+
+        CodigoDistancia codigoDistancia = codigoDistanciaRepository.findById(contatoCreateDTO.fkCodigoDistanciaId()).orElse(null);
+        contato.setCodigoDistancia(codigoDistancia);
 
         return contatoRepository.save(contato);
     }
