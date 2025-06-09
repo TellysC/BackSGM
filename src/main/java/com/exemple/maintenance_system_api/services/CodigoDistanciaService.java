@@ -8,6 +8,7 @@ import com.exemple.maintenance_system_api.repositories.CodigoDistanciaRepository
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
@@ -16,6 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CodigoDistanciaService {
 
+    @Autowired
     private final CodigoDistanciaRepository codigoDistanciaRepository;
 
     @Transactional
