@@ -2,6 +2,7 @@ package com.exemple.maintenance_system_api.services;
 
 import com.exemple.maintenance_system_api.domain.model.CodigoDistancia;
 import com.exemple.maintenance_system_api.domain.model.Contato;
+import com.exemple.maintenance_system_api.domain.model.dto.CodigoDistanciaCreateDTO;
 import com.exemple.maintenance_system_api.domain.model.dto.ContatoCreateDTO;
 import com.exemple.maintenance_system_api.domain.model.dto.ContatoUpdateDTO;
 import com.exemple.maintenance_system_api.excption.IdException;
@@ -31,11 +32,9 @@ public class ContatoService {
 
         contato.setCelular(contatoCreateDTO.celular());
         contato.setTelefone(contatoCreateDTO.telefone());
+        contato.setCodigoDistancia(codigoDistanciaRepository.save(new CodigoDistancia()));
 
         log.info("Criando contato com celular: {} e telefone: {}", contatoCreateDTO.celular(), contatoCreateDTO.telefone());
-
-        CodigoDistancia codigoDistancia = codigoDistanciaRepository.findById(contatoCreateDTO.fkCodigoDistanciaId()).orElse(null);
-        contato.setCodigoDistancia(codigoDistancia);
 
         return contatoRepository.save(contato);
     }

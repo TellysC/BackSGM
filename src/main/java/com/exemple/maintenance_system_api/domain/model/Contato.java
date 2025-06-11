@@ -23,8 +23,8 @@ public class Contato {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private int telefone;
-    private int celular;
+    private String telefone;
+    private String celular;
 
     @ManyToOne
     @JoinColumn(name = "fk_codigo_distacia_id", nullable = false)
