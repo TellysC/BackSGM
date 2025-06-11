@@ -22,13 +22,13 @@ public class Endereco {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private String logadouro;
+    private String logradouro;
     private int numero;
     private String bairro;
     private String cidade;
     private String estado;
     private int cep;
-    private String país;
+    private String pais;
 
     @CreationTimestamp
     private OffsetDateTime createdAt;
