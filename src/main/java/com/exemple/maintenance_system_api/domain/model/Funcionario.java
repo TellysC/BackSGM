@@ -25,13 +25,18 @@ public class Funcionario {
     private long id;
     private String nome;
     private String cargo;
-    private int cpf;
+    private String cpf;
 
     @OneToOne
+    @JoinColumn(name = "fk_usuario_id", nullable = false)
     private Usuario usuario;
+
     @OneToOne
+    @JoinColumn(name = "fk_endereco_id", nullable = false)
     private Endereco endereco;
+
     @OneToOne
+    @JoinColumn(name = "fk_contato_id", nullable = false)
     private Contato contato;
 
     @CreationTimestamp

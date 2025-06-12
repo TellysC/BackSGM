@@ -1,5 +1,6 @@
 package com.exemple.maintenance_system_api.services;
 
+import com.exemple.maintenance_system_api.domain.model.Funcionario;
 import com.exemple.maintenance_system_api.domain.model.Usuario;
 import com.exemple.maintenance_system_api.domain.model.dto.UsuarioCreateDTO;
 import com.exemple.maintenance_system_api.domain.model.dto.UsuarioUpdateDTO;
@@ -41,6 +42,7 @@ public class UsuarioService {
 
     @Transactional
     public void deletar(Long id) {
+        Usuario usuario = usuarioRepository.findById(id).get();
         usuarioRepository.deleteById(id);
     }
 

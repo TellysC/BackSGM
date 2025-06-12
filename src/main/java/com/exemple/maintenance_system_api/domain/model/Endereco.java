@@ -24,10 +24,11 @@ public class Endereco {
     private long id;
     private String logradouro;
     private int numero;
+    @Column(nullable = false)
     private String bairro;
     private String cidade;
     private String estado;
-    private int cep;
+    private String cep;
     private String pais;
 
     @CreationTimestamp
