@@ -2,8 +2,8 @@
 
 CREATE TABLE contatos (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    telefone INT(8) NULL,
-    celular INT(9) NOT NULL,
+    telefone VARCHAR(8) NULL,
+    celular VARCHAR(9) NOT NULL,
     created_at TIMESTAMP NOT NULL,
     updated_at TIMESTAMP NOT NULL,
     deleted_at TIMESTAMP,

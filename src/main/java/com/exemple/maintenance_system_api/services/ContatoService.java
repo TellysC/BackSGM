@@ -49,11 +49,7 @@ public class ContatoService {
     }
 
     public void deletar(long id){
-        if(!contatoRepository.existsById(id)) {
-            log.error("Equipamento não encontrado com o id {}", id);
-            throw new IdException("Equipamento não encontrado");
-        }
-        log.info("Deleting budget with id {}", id);
+        Contato contato = contatoRepository.findById(id).get();
         contatoRepository.deleteById(id);
     }
 

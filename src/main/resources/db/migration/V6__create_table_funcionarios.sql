@@ -2,7 +2,7 @@ CREATE TABLE funcionarios (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(255) NOT NULL,
     cargo VARCHAR(55) NOT NULL,
-    cpf INT(11) NOT NULL UNIQUE,
+    cpf VARCHAR(11) NOT NULL UNIQUE,
     created_at TIMESTAMP NOT NULL,
     update_at TIMESTAMP NOT NULL,
     deleted_at TIMESTAMP,
