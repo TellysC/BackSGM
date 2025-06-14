@@ -1,7 +1,7 @@
 CREATE TABLE funcionarios (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(255) NOT NULL,
-    cargo VARCHAR(55) NOT NULL,
+    cargo ENUM('ADMINISTRADOR', 'TECNICO', 'CLIENTE') NOT NULL,
     cpf VARCHAR(11) NOT NULL UNIQUE,
     created_at TIMESTAMP NOT NULL,
     updated_at TIMESTAMP ,

@@ -25,7 +25,7 @@ public class ContatoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Contato> atualizar(@RequestBody long id, ContatoUpdateDTO contatoUpdateDTO) {
+    public ResponseEntity<Contato> atualizar(@PathVariable long id, @RequestBody ContatoUpdateDTO contatoUpdateDTO) {
         Contato contato = contatoService.atualizar(id, contatoUpdateDTO);
         return ResponseEntity.ok(contato);
     }

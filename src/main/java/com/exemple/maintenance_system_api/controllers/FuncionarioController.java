@@ -26,7 +26,7 @@ public class FuncionarioController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Funcionario> atualizar(@RequestBody Long id, FuncionarioUpdateDTO funcionarioUpdateDTO) {
+    public ResponseEntity<Funcionario> atualizar(@PathVariable Long id,@RequestBody FuncionarioUpdateDTO funcionarioUpdateDTO) {
         Funcionario funcionario = funcionarioService.atualizar(id, funcionarioUpdateDTO);
         return ResponseEntity.ok(funcionario);
     }

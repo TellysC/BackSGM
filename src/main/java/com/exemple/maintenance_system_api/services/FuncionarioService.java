@@ -63,32 +63,28 @@ public class FuncionarioService {
 
     @Transactional
     public Funcionario atualizar(Long id, FuncionarioUpdateDTO funcionarioUpdateDTO) {
-        Funcionario funcionario = funcionarioRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Funcionário não encontrado"));
-
+        log.info("Atualizando funcionario com o id: {}", id);
+        Funcionario funcionario = funcionarioRepository.findById(id).orElseThrow(() -> new RuntimeException("Funcionário não encontrado"));
         funcionario.setNome(funcionarioUpdateDTO.nome());
         funcionario.setCargo(funcionarioUpdateDTO.cargo());
         funcionario.setCpf(funcionarioUpdateDTO.cpf());
-
-        // Atualizando o usuário existente
-        Usuario usuario = funcionario.getUsuario();
-        usuario.setEmail(funcionarioUpdateDTO.usuarioUpdateDTO().email());
-        usuario.setSenha(funcionarioUpdateDTO.usuarioUpdateDTO().senha());
-        funcionario.setUsuario(usuario);
-
-        // Atualizando o endereço existente
-        Endereco endereco = funcionario.getEndereco();
-        endereco.setBairro(funcionarioUpdateDTO.enderecoUpdateDTO().bairro());
-        endereco.setCep(funcionarioUpdateDTO.enderecoUpdateDTO().cep());
-        endereco.setCidade(funcionarioUpdateDTO.enderecoUpdateDTO().cidade());
-        endereco.setEstado(funcionarioUpdateDTO.enderecoUpdateDTO().estado());
-        endereco.setLogradouro(funcionarioUpdateDTO.enderecoUpdateDTO().logradouro());
-        endereco.setPais(funcionarioUpdateDTO.enderecoUpdateDTO().pais());
-        endereco.setNumero(funcionarioUpdateDTO.enderecoUpdateDTO().numero());
-        funcionario.setEndereco(endereco);
-
+        funcionario.getUsuario().setEmail(funcionarioUpdateDTO.usuarioUpdateDTO().email());
+        funcionario.getUsuario().setSenha(funcionarioUpdateDTO.usuarioUpdateDTO().senha());
+        funcionario.getEndereco().setBairro(funcionarioUpdateDTO.enderecoUpdateDTO().bairro());
+        funcionario.getEndereco().setCep(funcionarioUpdateDTO.enderecoUpdateDTO().cep());
+        funcionario.getEndereco().setCidade(funcionarioUpdateDTO.enderecoUpdateDTO().cidade());
+        funcionario.getEndereco().setEstado(funcionarioUpdateDTO.enderecoUpdateDTO().estado());
+        funcionario.getEndereco().setLogradouro(funcionarioUpdateDTO.enderecoUpdateDTO().logradouro());
+        funcionario.getEndereco().setPais(funcionarioUpdateDTO.enderecoUpdateDTO().pais());
+        funcionario.getEndereco().setNumero(funcionarioUpdateDTO.enderecoUpdateDTO().numero());
+        funcionario.getContato().setCelular(funcionarioUpdateDTO.contatoUpdateDTO().celular());
+        funcionario.getContato().setTelefone(funcionarioUpdateDTO.contatoUpdateDTO().telefone());
+        funcionario.getContato().getCodigoDistancia().setEstado(funcionarioUpdateDTO.contatoUpdateDTO().codigoDistanciaUpdateDTO().estado());
+        funcionario.getContato().getCodigoDistancia().setNumero(funcionarioUpdateDTO.contatoUpdateDTO().codigoDistanciaUpdateDTO().numero());
+        log.info("Atualizando funcionário com ID: {}", id);
         return funcionarioRepository.save(funcionario);
     }
+
 
 
     @Transactional

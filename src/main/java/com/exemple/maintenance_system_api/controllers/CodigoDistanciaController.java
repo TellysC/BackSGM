@@ -24,7 +24,7 @@ public class CodigoDistanciaController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CodigoDistancia> atualizar(@RequestBody long id,CodigoDistanciaUpdateDTO codigoDistanciaUpdateDTO) {
+    public ResponseEntity<CodigoDistancia> atualizar(@PathVariable long id,@RequestBody CodigoDistanciaUpdateDTO codigoDistanciaUpdateDTO) {
         CodigoDistancia codigoDistancia = codigoDistanciaService.atualizar(id, codigoDistanciaUpdateDTO);
         return ResponseEntity.ok(codigoDistancia);
     }
