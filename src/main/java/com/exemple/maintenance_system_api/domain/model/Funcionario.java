@@ -1,5 +1,6 @@
 package com.exemple.maintenance_system_api.domain.model;
 
+import com.exemple.maintenance_system_api.domain.model.enums.Cargo;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,8 +25,11 @@ public class Funcionario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String nome;
-    private String cargo;
     private String cpf;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Cargo cargo;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "fk_usuarios_id")
