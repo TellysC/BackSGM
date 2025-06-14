@@ -2,6 +2,7 @@ package com.exemple.maintenance_system_api.domain.model.dto;
 
 import com.exemple.maintenance_system_api.excption.FieldException;
 
+
 public record EquipamentoCreateDTO(String nome, String descricao) {
 
     public EquipamentoCreateDTO {
