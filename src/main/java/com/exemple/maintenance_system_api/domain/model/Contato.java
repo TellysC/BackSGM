@@ -26,7 +26,7 @@ public class Contato {
     private String telefone;
     private String celular;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "fk_codigo_distacia_id", nullable = false)
     private CodigoDistancia codigoDistancia;
 

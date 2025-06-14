@@ -9,5 +9,5 @@ CREATE TABLE enderecos (
     cep VARCHAR(100) NOT NULL,
     created_at TIMESTAMP NOT NULL,
     updated_at TIMESTAMP NOT NULL,
-    deletad_at TIMESTAMP
+    deleted_at TIMESTAMP
 );

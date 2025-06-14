@@ -27,16 +27,16 @@ public class Funcionario {
     private String cargo;
     private String cpf;
 
-    @OneToOne
-    @JoinColumn(name = "fk_usuario_id", nullable = false)
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "fk_usuarios_id")
     private Usuario usuario;
 
-    @OneToOne
-    @JoinColumn(name = "fk_endereco_id", nullable = false)
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "fk_enderecos_id")
     private Endereco endereco;
 
-    @OneToOne
-    @JoinColumn(name = "fk_contato_id", nullable = false)
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "fk_contato_id")
     private Contato contato;
 
     @CreationTimestamp
