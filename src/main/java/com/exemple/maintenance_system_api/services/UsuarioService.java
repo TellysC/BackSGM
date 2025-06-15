@@ -42,19 +42,21 @@ public class UsuarioService {
 
     @Transactional
     public void deletar(Long id) {
-        Usuario usuario = usuarioRepository.findById(id).get();
-        usuarioRepository.deleteById(id);
+        Usuario usuario = usuarioRepository.findById(id).orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+        usuarioRepository.delete(usuario);
     }
 
     @Transactional
     public Usuario buscar(Long id) {
-        log.info("Buscando Usuario com o id {}", id);
-        return usuarioRepository.findById(id).orElse(null);
+        log.info("Buscando Usuário com o id {}", id);
+        return usuarioRepository.findById(id).orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
     }
 
     @Transactional
     public List<Usuario> listar() {
-        log.info("Listando todas as Usuarios");
+        log.info("Listando todos os Usuários");
         return usuarioRepository.findAll();
     }
+
 }
+

@@ -16,10 +16,10 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 public class EnderecoService {
-    
+
     @Autowired
     private final EnderecoRepository enderecoRepository;
-    
+
     @Transactional
     public Endereco criar(EnderecoCreateDTO enderecoCreateDTO) {
         Endereco endereco = new Endereco();
@@ -32,7 +32,7 @@ public class EnderecoService {
         endereco.setPais(enderecoCreateDTO.pais());
         return enderecoRepository.save(endereco);
     }
-    
+
     @Transactional
     public Endereco atualizar(Long id, EnderecoUpdateDTO enderecoUpdateDTO) {
         Endereco endereco = enderecoRepository.findById(id).orElse(null);
@@ -45,19 +45,21 @@ public class EnderecoService {
         endereco.setPais(enderecoUpdateDTO.pais());
         return enderecoRepository.save(endereco);
     }
-    
+
     @Transactional
     public void deletar(Long id) {
-        enderecoRepository.deleteById(id);
+        Endereco endereco = enderecoRepository.findById(id).orElseThrow(() -> new RuntimeException("Endereço não encontrado"));
+        enderecoRepository.delete(endereco);
     }
-    
+
     @Transactional
     public Endereco buscar(Long id) {
-        return enderecoRepository.findById(id).orElse(null);
+        return enderecoRepository.findById(id).orElseThrow(() -> new RuntimeException("Endereço não encontrado"));
     }
-    
+
     @Transactional
     public List<Endereco> listar() {
+        log.info("Listando todos os endereços");
         return enderecoRepository.findAll();
     }
 }

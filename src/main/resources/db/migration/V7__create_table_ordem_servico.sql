@@ -1,14 +1,15 @@
 CREATE TABLE ordem_servico (
-    Id INT AUTO_INCREMENT PRIMARY KEY,
-    Descricao VARCHAR(255) NOT NULL,
-    Status VARCHAR(60) NOT NULL,
-    Created_at TIMESTAMP NOT NULL,
-    Updated_at TIMESTAMP NOT NULL,
-    Deleted_at TIMESTAMP,
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    descricao VARCHAR(255) NOT NULL,
+    status VARCHAR(60) NOT NULL,
+    tipo_manuntencao ENUM('PREVENTIVA', 'CORRETIVA') NOT NULL,
+    created_at TIMESTAMP NOT NULL,
+    updated_at TIMESTAMP NOT NULL,
+    deleted_at TIMESTAMP,
     fk_Funcionario_Id INT NOT NULL,
     fk_Equipamento_Id INT NOT NULL,
-    FOREIGN KEY (fk_Funcionario_Id) REFERENCES funcionario(Id),
-    FOREIGN KEY (fk_Equipamento_Id) REFERENCES equipamento(Id)
+    FOREIGN KEY (fk_Funcionario_Id) REFERENCES funcionarios(Id),
+    FOREIGN KEY (fk_Equipamento_Id) REFERENCES equipamentos(Id)
 );
 
 
