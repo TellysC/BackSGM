@@ -40,23 +40,24 @@ public class EquipamentoService {
         return equipamentoRepository.save(equipamento);
     }
 
+    @Transactional
     public void deletarEquipamento(Long id) {
-        if(!equipamentoRepository.existsById(id)) {
-            log.error("Equipamento não encontrado com o id {}", id);
-            throw new IdException("Equipamento não encontrado");
-        }
-        log.info("Deleting budget with id {}", id);
-        equipamentoRepository.deleteById(id);
+        Equipamento equipamento = equipamentoRepository.findById(id)
+                .orElseThrow(() -> new IdException("Equipamento não encontrado"));
+        log.info("Deletando equipamento com o id {}", id);
+        equipamentoRepository.delete(equipamento);
     }
 
+    @Transactional
     public Equipamento buscarEquipamentoPeloId(Long id) {
         log.info("Buscando equipamento com o id {}", id);
-        return equipamentoRepository.findById(id).orElseThrow(() -> new IdException("Equipamento não encontrado"));
+        return equipamentoRepository.findById(id)
+                .orElseThrow(() -> new IdException("Equipamento não encontrado"));
     }
 
+    @Transactional
     public List<Equipamento> listarTodosOsEquipamentos() {
         log.info("Listando todos os equipamentos");
         return equipamentoRepository.findAll();
     }
-
 }

@@ -42,20 +42,20 @@ public class CodigoDistanciaService {
 
     }
 
+    @Transactional
     public void deletar(Long id) {
-        if(!codigoDistanciaRepository.existsById(id)) {
-            log.error("Equipamento não encontrado com o id {}", id);
-            throw new IdException("Codigo distancia não encontrado");
-        }
-        log.info("Deleting budget with id {}", id);
-        codigoDistanciaRepository.deleteById(id);
+        CodigoDistancia codigo = codigoDistanciaRepository.findById(id).orElseThrow(() -> new IdException("Código Distancia não encontrado"));
+        log.info("Deletando Código Distancia com o id {}", id);
+        codigoDistanciaRepository.delete(codigo);
     }
 
+    @Transactional
     public CodigoDistancia buscar(Long id) {
-        log.info("Buscando Codigo Distancia com o id {}", id);
+        log.info("Buscando Código Distancia com o id {}", id);
         return codigoDistanciaRepository.findById(id).orElseThrow(() -> new IdException("Código Distancia não encontrado"));
     }
 
+    @Transactional
     public List<CodigoDistancia> listar() {
         log.info("Listando todos os Códigos Distancia");
         return codigoDistanciaRepository.findAll();

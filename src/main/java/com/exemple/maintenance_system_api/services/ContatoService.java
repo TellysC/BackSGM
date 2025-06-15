@@ -27,7 +27,7 @@ public class ContatoService {
     private CodigoDistanciaRepository codigoDistanciaRepository;
 
     @Transactional
-    public Contato criar(ContatoCreateDTO contatoCreateDTO){
+    public Contato criar(ContatoCreateDTO contatoCreateDTO) {
         Contato contato = new Contato();
 
         contato.setCelular(contatoCreateDTO.celular());
@@ -40,7 +40,7 @@ public class ContatoService {
     }
 
     @Transactional
-    public Contato atualizar(long id,ContatoUpdateDTO contatoUpdateDTO){
+    public Contato atualizar(long id, ContatoUpdateDTO contatoUpdateDTO) {
         Contato contato = contatoRepository.findById(id).get();
         contato.setCelular(contatoUpdateDTO.celular());
         contato.setTelefone(contatoUpdateDTO.telefone());
@@ -48,17 +48,19 @@ public class ContatoService {
         return contatoRepository.save(contato);
     }
 
-    public void deletar(long id){
-        Contato contato = contatoRepository.findById(id).get();
-        contatoRepository.deleteById(id);
+    @Transactional
+    public void deletar(long id) {
+        Contato contato = contatoRepository.findById(id).orElseThrow(() -> new RuntimeException("Contato não encontrado"));
+        contatoRepository.delete(contato);
     }
 
-    public Contato buscar(long id){
-        return contatoRepository.findById(id).get();
-
+    @Transactional
+    public Contato buscar(long id) {
+        return contatoRepository.findById(id).orElseThrow(() -> new RuntimeException("Contato não encontrado"));
     }
 
-    public List<Contato> listar(){
+    @Transactional
+    public List<Contato> listar() {
         log.info("Listando todos os contatos");
         return contatoRepository.findAll();
     }

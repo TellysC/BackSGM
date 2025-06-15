@@ -1,6 +1,5 @@
 package com.exemple.maintenance_system_api.domain.model;
 
-import com.exemple.maintenance_system_api.domain.model.enums.TipoManuntencao;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,31 +12,23 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.time.OffsetDateTime;
 
 @Entity
-@Table(name = "ordem_servico")
+@Table(name = "relatorios")
 @NoArgsConstructor
 @Data
 @EntityListeners(AuditingEntityListener.class)
-@SQLDelete(sql = "UPDATE ordem_servico SET deleted_at = NOW() WHERE id = ?")
+@SQLDelete(sql = "UPDATE usuarios SET deleted_at = NOW() WHERE id = ?" )
 @Where(clause = "deleted_at IS NULL")
-public class OrdemServico {
+public class Relatorio {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String titulo;
     private String descricao;
-    private String status;
 
-    @Column(name = "tipo_manuntencao", nullable = false)
-    @Enumerated(EnumType.STRING)
-    private TipoManuntencao tipoManuntencao;
-
-    @ManyToOne
-    @JoinColumn(name = "fk_funcionario_id", nullable = false)
-    private Funcionario funcionario;
-
-    @ManyToOne
-    @JoinColumn(name = "fk_equipamento_id", nullable = false)
-    private Equipamento equipamento;
+    @OneToOne
+    @Column(name = "fk_ordem_servico_id", nullable = false)
+    private OrdemServico ordemServico;
 
     @CreationTimestamp
     private OffsetDateTime createdAt;
@@ -46,4 +37,7 @@ public class OrdemServico {
     private OffsetDateTime updatedAt;
 
     private OffsetDateTime deletedAt;
+
 }
+
+

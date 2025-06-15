@@ -21,9 +21,7 @@ import java.util.List;
 public class FuncionarioService {
 
     private final FuncionarioRepository funcionarioRepository;
-    private final UsuarioRepository usuarioRepository;
-    private final EnderecoRepository enderecoRepository;
-    private final ContatoRepository contatoRepository;
+
 
     @Transactional
     public Funcionario criar(FuncionarioCreateDTO funcionarioCreateDTO) {
@@ -60,7 +58,6 @@ public class FuncionarioService {
     }
 
 
-
     @Transactional
     public Funcionario atualizar(Long id, FuncionarioUpdateDTO funcionarioUpdateDTO) {
         log.info("Atualizando funcionario com o id: {}", id);
@@ -85,23 +82,20 @@ public class FuncionarioService {
         return funcionarioRepository.save(funcionario);
     }
 
-
-
     @Transactional
     public void deletar(Long id) {
-        Funcionario funcionario = funcionarioRepository.findById(id).get();
-        funcionarioRepository.deleteById(id);
+        Funcionario funcionario = funcionarioRepository.findById(id).orElseThrow(() -> new RuntimeException("Funcionário não encontrado"));
+        funcionarioRepository.delete(funcionario);
     }
 
     @Transactional
-    public Funcionario buscar(Long id){
-        return funcionarioRepository.findById(id).get();
-
+    public Funcionario buscar(Long id) {
+        return funcionarioRepository.findById(id).orElseThrow(() -> new RuntimeException("Funcionário não encontrado"));
     }
 
     @Transactional
-    public List<Funcionario> listar(){
-        log.info("Listando todos os contatos");
+    public List<Funcionario> listar() {
+        log.info("Listando todos os funcionários");
         return funcionarioRepository.findAll();
     }
 
