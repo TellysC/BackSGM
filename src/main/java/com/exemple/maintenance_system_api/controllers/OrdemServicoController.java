@@ -26,13 +26,6 @@ public class OrdemServicoController {
 
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<OrdemServico> atualizar(@RequestBody Long id, OrdemServicoUpdateDTO ordemServicoUpdateDTO) {
-        OrdemServico ordemServico = ordemServicoService.atualizar(id, ordemServicoUpdateDTO);
-        return ResponseEntity.ok(ordemServico);
-
-    }
-
     @DeleteMapping("/{id}")
     public ResponseEntity<OrdemServico> deletar(@RequestBody Long id) {
         ordemServicoService.deletar(id);
