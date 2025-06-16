@@ -12,6 +12,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
+@CrossOrigin("*")
 @RequestMapping("/equipamento")
 public class EquipamentoController {
 
@@ -46,5 +47,5 @@ public class EquipamentoController {
         List<Equipamento> equipamento = equipamentoService.listarTodosOsEquipamentos();
         return ResponseEntity.ok(equipamento);
     }
-
 }
+

@@ -13,6 +13,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
+@CrossOrigin("*")
 @RequestMapping("/contato")
 public class ContatoController {
 

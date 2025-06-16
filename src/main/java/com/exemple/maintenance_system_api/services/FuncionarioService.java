@@ -31,7 +31,6 @@ public class FuncionarioService {
         Funcionario funcionario = new Funcionario();
 
         funcionario.setNome(funcionarioCreateDTO.nome());
-        funcionario.setCargo(funcionarioCreateDTO.cargo());
         funcionario.setCpf(funcionarioCreateDTO.cpf());
 
         Usuario usuario = new Usuario();
@@ -71,7 +70,6 @@ public class FuncionarioService {
         log.info("Atualizando funcionario com o id: {}", id);
         Funcionario funcionario = funcionarioRepository.findById(id).orElseThrow(() -> new RuntimeException("Funcionário não encontrado"));
         funcionario.setNome(funcionarioUpdateDTO.nome());
-        funcionario.setCargo(funcionarioUpdateDTO.cargo());
         funcionario.setCpf(funcionarioUpdateDTO.cpf());
         funcionario.getUsuario().setEmail(funcionarioUpdateDTO.usuarioRegisterDTO().email());
         funcionario.getUsuario().setSenha(funcionarioUpdateDTO.usuarioRegisterDTO().senha());

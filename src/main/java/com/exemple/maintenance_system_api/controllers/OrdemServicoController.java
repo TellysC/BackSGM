@@ -13,6 +13,7 @@ import java.util.List;
 
 @RequestMapping("/ordem-servico")
 @RestController
+@CrossOrigin("*")
 @RequiredArgsConstructor
 
 public class OrdemServicoController {
@@ -25,6 +26,13 @@ public class OrdemServicoController {
         return ResponseEntity.status(201).body(ordemServico);
 
     }
+
+    @PutMapping("/{id}/fechar")
+    public ResponseEntity<OrdemServico> fechar(@PathVariable Long id) {
+        OrdemServico ordemFechada = ordemServicoService.fechar(id);
+        return ResponseEntity.ok(ordemFechada);
+    }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<OrdemServico> deletar(@RequestBody Long id) {
@@ -45,5 +53,12 @@ public class OrdemServicoController {
         List<OrdemServico> ordemServico = ordemServicoService.listar();
         return ResponseEntity.ok(ordemServico);
     }
+
+    @GetMapping("/abertas")
+    public ResponseEntity<List<OrdemServico>> listarAbertas() {
+        List<OrdemServico> abertas = ordemServicoService.listarAbertas();
+        return ResponseEntity.ok(abertas);
+    }
+
 }
 

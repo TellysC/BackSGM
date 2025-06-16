@@ -1,5 +1,6 @@
 package com.exemple.maintenance_system_api.domain.model;
 
+import com.exemple.maintenance_system_api.domain.model.enums.StatusOrdemServico;
 import com.exemple.maintenance_system_api.domain.model.enums.TipoManuntencao;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -25,7 +26,11 @@ public class OrdemServico {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String descricao;
-    private String status;
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private StatusOrdemServico status;
+
 
     @Column(name = "tipo_manuntencao", nullable = false)
     @Enumerated(EnumType.STRING)

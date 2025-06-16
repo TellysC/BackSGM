@@ -12,6 +12,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
+@CrossOrigin("*")
 @RequestMapping("/codigo-distancia")
 public class CodigoDistanciaController {
 

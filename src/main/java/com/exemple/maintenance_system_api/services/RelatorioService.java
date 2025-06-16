@@ -26,10 +26,10 @@ public class RelatorioService {
         relatorio.setTitulo(relatorioCreateDTO.titulo());
         relatorio.setDescricao(relatorioCreateDTO.descricao());
 
-        OrdemServico ordemServico = ordemServicoRepository.findById(Long.parseLong(relatorioCreateDTO.ordemServicoId().getStatus()))
+        OrdemServico ordem = ordemServicoRepository.findById(relatorioCreateDTO.ordemServicoId())
                 .orElseThrow(() -> new RuntimeException("Ordem de serviço não encontrada"));
-        relatorio.setOrdemServico(ordemServico);
 
+        relatorio.setOrdemServico(ordem);
         return relatorioRepository.save(relatorio);
     }
 
