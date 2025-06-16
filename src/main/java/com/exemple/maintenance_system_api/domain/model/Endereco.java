@@ -25,7 +25,7 @@ public class Endereco {
     @Column(nullable = false)
     private String logradouro;
     @Column(nullable = false)
-    private int numero;
+    private String numero;
     @Column(nullable = false)
     private String bairro;
     @Column(nullable = false)

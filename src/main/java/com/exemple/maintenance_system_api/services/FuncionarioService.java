@@ -11,6 +11,8 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,6 +24,7 @@ public class FuncionarioService {
 
     private final FuncionarioRepository funcionarioRepository;
 
+    private final PasswordEncoder passwordEncoder;
 
     @Transactional
     public Funcionario criar(FuncionarioCreateDTO funcionarioCreateDTO) {
@@ -32,8 +35,10 @@ public class FuncionarioService {
         funcionario.setCpf(funcionarioCreateDTO.cpf());
 
         Usuario usuario = new Usuario();
-        usuario.setEmail(funcionarioCreateDTO.usuarioCreateDTO().email());
-        usuario.setSenha(funcionarioCreateDTO.usuarioCreateDTO().senha());
+        usuario.setEmail(funcionarioCreateDTO.usuarioRegisterDTO().email());
+        String senhaCriptografada = passwordEncoder.encode(funcionarioCreateDTO.usuarioRegisterDTO().senha());
+        usuario.setSenha(senhaCriptografada);
+        usuario.setRole(funcionarioCreateDTO.usuarioRegisterDTO().role());
         funcionario.setUsuario(usuario);
 
         Endereco endereco = new Endereco();
@@ -49,13 +54,16 @@ public class FuncionarioService {
         Contato contato = new Contato();
         contato.setCelular(funcionarioCreateDTO.contatoCreateDTO().celular());
         contato.setTelefone(funcionarioCreateDTO.contatoCreateDTO().telefone());
-        funcionario.setContato(contato);
 
         CodigoDistancia codigoDistancia = new CodigoDistancia();
+        codigoDistancia.setEstado(funcionarioCreateDTO.contatoCreateDTO().codigoDistanciaCreateDTO().estado());
+        codigoDistancia.setNumero(funcionarioCreateDTO.contatoCreateDTO().codigoDistanciaCreateDTO().numero());
         contato.setCodigoDistancia(codigoDistancia);
+        funcionario.setContato(contato);
 
         return funcionarioRepository.save(funcionario);
     }
+
 
 
     @Transactional
@@ -65,8 +73,9 @@ public class FuncionarioService {
         funcionario.setNome(funcionarioUpdateDTO.nome());
         funcionario.setCargo(funcionarioUpdateDTO.cargo());
         funcionario.setCpf(funcionarioUpdateDTO.cpf());
-        funcionario.getUsuario().setEmail(funcionarioUpdateDTO.usuarioUpdateDTO().email());
-        funcionario.getUsuario().setSenha(funcionarioUpdateDTO.usuarioUpdateDTO().senha());
+        funcionario.getUsuario().setEmail(funcionarioUpdateDTO.usuarioRegisterDTO().email());
+        funcionario.getUsuario().setSenha(funcionarioUpdateDTO.usuarioRegisterDTO().senha());
+        funcionario.getUsuario().setRole(funcionarioUpdateDTO.usuarioRegisterDTO().role());
         funcionario.getEndereco().setBairro(funcionarioUpdateDTO.enderecoUpdateDTO().bairro());
         funcionario.getEndereco().setCep(funcionarioUpdateDTO.enderecoUpdateDTO().cep());
         funcionario.getEndereco().setCidade(funcionarioUpdateDTO.enderecoUpdateDTO().cidade());

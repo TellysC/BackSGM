@@ -31,6 +31,7 @@ public class FuncionarioController {
         return ResponseEntity.ok(funcionario);
     }
 
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletar(@RequestBody Long id) {
         funcionarioService.deletar(id);

@@ -6,6 +6,7 @@ import com.exemple.maintenance_system_api.domain.model.dto.UsuarioRegisterDTO;
 import com.exemple.maintenance_system_api.domain.model.dto.UsuarioResponseDTO;
 import com.exemple.maintenance_system_api.infra.security.TokenService;
 import com.exemple.maintenance_system_api.repositories.UsuarioRepository;
+import com.exemple.maintenance_system_api.services.UsuarioService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
 
     @Autowired
-    private UsuarioRepository usuarioRepository;
+    private UsuarioService usuarioService;
     @Autowired
     private AuthenticationManager authenticationManager;
     @Autowired
@@ -36,14 +37,9 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity register(@RequestBody @Valid UsuarioRegisterDTO usuarioRegisterDTO) {
-       if(this.usuarioRepository.findByEmail(usuarioRegisterDTO.email()) != null) return ResponseEntity.ok().build();
-
-       String encryptedPassword = new BCryptPasswordEncoder().encode(usuarioRegisterDTO.senha());
-       Usuario usuario = new Usuario(usuarioRegisterDTO.email(), encryptedPassword, usuarioRegisterDTO.role());
-
-       this.usuarioRepository.save(usuario);
-         return ResponseEntity.ok().build();
-
+    public ResponseEntity<Usuario> register(@RequestBody @Valid UsuarioRegisterDTO usuarioRegisterDTO) {
+        Usuario usuarioCriado = usuarioService.registrar(usuarioRegisterDTO);
+        return ResponseEntity.status(201).body(usuarioCriado);
     }
+
 }
