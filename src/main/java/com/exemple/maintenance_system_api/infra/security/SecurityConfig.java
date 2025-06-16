@@ -26,9 +26,26 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
+
                         // Endpoints públicos
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/auth/login","/auth/register").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/funcionario/criar", "/equipamento/criar").hasRole("ADMINISTRADOR")
+                        .requestMatchers(HttpMethod.DELETE, "/funcionario/{id}", "/equipamento/{id}").hasRole("ADMINISTRADOR")
+                        .requestMatchers(HttpMethod.PUT, "/funcionario/{id}", "/equipamento/{id}").hasRole("ADMINISTRADOR")
+                        .requestMatchers(HttpMethod.POST, "/ordem-servico/criar").hasRole("CLIENTE")
+                        .requestMatchers(HttpMethod.GET, "/ordem-servico/{id}","/ordem-servico", "ordem-servico/abertas").hasAnyRole("TECNICO", "ADMINISTRADOR")
+                        .requestMatchers(HttpMethod.POST, "/ordemServico/criar").hasRole("CLIENTE")
+                        .requestMatchers(HttpMethod.GET, "/ordemServico/{id}","/ordem-servico").hasAnyRole("TECNICO", "ADMINISTRADOR")
+                        .requestMatchers(HttpMethod.POST, "relatorio/ordem-servico").hasRole("TECNICO")
+                        .requestMatchers(HttpMethod.PUT, "ordem-servico/fechar").hasAnyRole("TECNICO", "ADMINISTRADOR")
+                        .requestMatchers(HttpMethod.GET, "/relatorio/{id}", "/relatorio").hasAnyRole("TECNICO", "ADMINISTRADOR")
+                        .anyRequest().authenticated())
+                        .anyRequest().permitAll())
+                .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
+                .build();
+    }
 
                         // Endpoints de Administrador
                         .requestMatchers("/funcionario/**").hasRole("ADMINISTRADOR")
