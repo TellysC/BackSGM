@@ -40,7 +40,7 @@ public class Funcionario {
     private Endereco endereco;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "fk_contato_id")
+    @JoinColumn(name = "fk_contatos_id")
     private Contato contato;
 
     @CreationTimestamp

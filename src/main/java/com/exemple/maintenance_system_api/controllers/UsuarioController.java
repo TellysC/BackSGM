@@ -17,12 +17,6 @@ public class UsuarioController {
 
     private final UsuarioService usuarioService;
 
-    @PostMapping("/criar")
-    public ResponseEntity<Usuario> criar(@RequestBody UsuarioAuthDTO usuarioCreateDTO) {
-        Usuario usuario = usuarioService.criar(usuarioCreateDTO);
-        return ResponseEntity.status(201).body(usuario);
-    }
-
     @PutMapping("/{id}")
     public ResponseEntity<Usuario> atualizar(@PathVariable Long id, @RequestBody UsuarioRegisterDTO usuarioUpdateDTO) {
         Usuario usuario = usuarioService.atualizar(id, usuarioUpdateDTO);
