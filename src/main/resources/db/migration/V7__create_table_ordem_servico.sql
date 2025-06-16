@@ -6,10 +6,10 @@ CREATE TABLE ordem_servico (
     created_at TIMESTAMP NOT NULL,
     updated_at TIMESTAMP NOT NULL,
     deleted_at TIMESTAMP,
-    fk_Funcionario_Id INT NOT NULL,
-    fk_Equipamento_Id INT NOT NULL,
-    FOREIGN KEY (fk_Funcionario_Id) REFERENCES funcionarios(Id),
-    FOREIGN KEY (fk_Equipamento_Id) REFERENCES equipamentos(Id)
+    fk_Funcionarios_Id INT NOT NULL,
+    fk_Equipamentos_Id INT NOT NULL,
+    FOREIGN KEY (fk_Funcionarios_Id) REFERENCES funcionarios(Id),
+    FOREIGN KEY (fk_Equipamentos_Id) REFERENCES equipamentos(Id)
 );
 
 
