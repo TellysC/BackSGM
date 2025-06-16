@@ -26,16 +26,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/funcionario", "/equipamento").hasRole("ADMINISTRADOR")
-                        .requestMatchers(HttpMethod.DELETE, "/funcionario", "/equipamento").hasRole("ADMINISTRADOR")
-                        .requestMatchers(HttpMethod.PUT, "/funcionario", "/equipamento").hasRole("ADMINISTRADOR")
-                        .requestMatchers(HttpMethod.GET, "/funcionario", "/funcionario/{id}").hasAnyRole("ADMINISTRADOR", "TECNICO", "CLIENTE")
-                        .requestMatchers(HttpMethod.GET, "/ordem-servico").hasAnyRole("TECNICO", "CLIENTE")
-                        .requestMatchers(HttpMethod.POST, "/ordem-servico").hasRole("CLIENTE")
-                        .requestMatchers(HttpMethod.POST, "/relatorio").hasRole("TECNICO")
-                        .anyRequest().authenticated())
+                        .anyRequest().permitAll())
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }

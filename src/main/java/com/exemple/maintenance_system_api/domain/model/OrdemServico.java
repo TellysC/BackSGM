@@ -32,11 +32,11 @@ public class OrdemServico {
     private TipoManuntencao tipoManuntencao;
 
     @ManyToOne
-    @JoinColumn(name = "fk_funcionario_id", nullable = false)
+    @JoinColumn(name = "fk_funcionarios_id", nullable = false)
     private Funcionario funcionario;
 
     @ManyToOne
-    @JoinColumn(name = "fk_equipamento_id", nullable = false)
+    @JoinColumn(name = "fk_equipamentos_id", nullable = false)
     private Equipamento equipamento;
 
     @CreationTimestamp

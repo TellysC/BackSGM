@@ -56,6 +56,8 @@ public class FuncionarioService {
         contato.setTelefone(funcionarioCreateDTO.contatoCreateDTO().telefone());
 
         CodigoDistancia codigoDistancia = new CodigoDistancia();
+        codigoDistancia.setEstado(funcionarioCreateDTO.contatoCreateDTO().codigoDistanciaCreateDTO().estado());
+        codigoDistancia.setNumero(funcionarioCreateDTO.contatoCreateDTO().codigoDistanciaCreateDTO().numero());
         contato.setCodigoDistancia(codigoDistancia);
         funcionario.setContato(contato);
 

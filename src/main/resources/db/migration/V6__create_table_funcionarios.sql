@@ -8,6 +8,7 @@ CREATE TABLE funcionarios (
     deleted_at TIMESTAMP,
     fk_Usuarios_Id INT NOT NULL,
     fk_Contatos_Id INT NOT NULL,
+    fk_Enderecos_Id INT NOT NULL,
     FOREIGN KEY (fk_Usuarios_Id) REFERENCES usuarios (id),
     FOREIGN KEY (fk_Enderecos_Id) REFERENCES enderecos(id),
     FOREIGN KEY (fk_Contatos_Id) REFERENCES contatos(id)
