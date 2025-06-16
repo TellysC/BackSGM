@@ -49,26 +49,6 @@ public class OrdemServicoService {
         return ordemServicoRepository.save(ordemServico);
     }
 
-
-    @Transactional
-    public OrdemServico atualizar(Long id, OrdemServicoUpdateDTO ordemServicoUpdateDTO) {
-        log.info("Atualizando funcionario com o id: {}", id);
-        OrdemServico ordemServico = ordemServicoRepository.findById(id).get();
-        ordemServico.setDescricao(ordemServicoUpdateDTO.descricao());
-        ordemServico.setStatus(ordemServicoUpdateDTO.status());
-        ordemServico.setTipoManuntencao(ordemServicoUpdateDTO.tipoManuntencao());
-        Equipamento equipamento = equipamentoRepository.findById(ordemServicoUpdateDTO.equipamento().getId())
-                .orElseThrow(() -> new RuntimeException("Equipamento não encontrado"));
-        Funcionario funcionario = funcionarioRepository.findById(ordemServicoUpdateDTO.funcionario().getId())
-                .orElseThrow(() -> new RuntimeException("Funcionário não encontrado"));
-
-        ordemServico.setEquipamento(equipamento);
-        ordemServico.setFuncionario(funcionario);
-
-        return ordemServicoRepository.save(ordemServico);
-
-    }
-
     @Transactional
     public void deletar(Long id) {
         OrdemServico ordemServico = ordemServicoRepository.findById(id).orElseThrow(() -> new RuntimeException("Ordem de serviço não encontrada"));

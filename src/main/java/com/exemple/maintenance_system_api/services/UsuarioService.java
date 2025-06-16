@@ -1,9 +1,8 @@
 package com.exemple.maintenance_system_api.services;
 
-import com.exemple.maintenance_system_api.domain.model.Funcionario;
 import com.exemple.maintenance_system_api.domain.model.Usuario;
-import com.exemple.maintenance_system_api.domain.model.dto.UsuarioCreateDTO;
-import com.exemple.maintenance_system_api.domain.model.dto.UsuarioUpdateDTO;
+import com.exemple.maintenance_system_api.domain.model.dto.UsuarioAuthDTO;
+import com.exemple.maintenance_system_api.domain.model.dto.UsuarioRegisterDTO;
 import com.exemple.maintenance_system_api.excption.IdException;
 import com.exemple.maintenance_system_api.repositories.UsuarioRepository;
 import jakarta.transaction.Transactional;
@@ -23,7 +22,7 @@ public class UsuarioService {
     private final UsuarioRepository usuarioRepository;
 
     @Transactional
-    public Usuario criar(UsuarioCreateDTO usuarioCreateDTO) {
+    public Usuario criar(UsuarioAuthDTO usuarioCreateDTO) {
         Usuario usuario = new Usuario();
 
         usuario.setEmail(usuarioCreateDTO.email());
@@ -32,7 +31,7 @@ public class UsuarioService {
     }
 
     @Transactional
-    public Usuario atualizar(Long id, UsuarioUpdateDTO usuarioUpdateDTO) {
+    public Usuario atualizar(Long id, UsuarioRegisterDTO usuarioUpdateDTO) {
         Usuario usuario = usuarioRepository.findById(id).orElseThrow(() -> new IdException("Usuário não encontrado"));
         usuario.setEmail(usuarioUpdateDTO.email());
         usuario.setSenha(usuarioUpdateDTO.senha());

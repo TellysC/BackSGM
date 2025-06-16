@@ -27,7 +27,7 @@ public class Relatorio {
     private String descricao;
 
     @OneToOne
-    @Column(name = "fk_ordem_servico_id", nullable = false)
+    @PrimaryKeyJoinColumn(name = "fk_ordem_servico_id", referencedColumnName = "id")
     private OrdemServico ordemServico;
 
     @CreationTimestamp
