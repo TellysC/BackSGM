@@ -30,13 +30,12 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/funcionario/criar", "/equipamento/criar").hasRole("ADMINISTRADOR")
                         .requestMatchers(HttpMethod.DELETE, "/funcionario/{id}", "/equipamento/{id}").hasRole("ADMINISTRADOR")
                         .requestMatchers(HttpMethod.PUT, "/funcionario/{id}", "/equipamento/{id}").hasRole("ADMINISTRADOR")
-
                         .requestMatchers(HttpMethod.POST, "/ordemServico/criar").hasRole("CLIENTE")
                         .requestMatchers(HttpMethod.GET, "/ordemServico/{id}","/ordem-servico").hasAnyRole("TECNICO", "ADMINISTRADOR")
                         .requestMatchers(HttpMethod.POST, "relatorio/ordem-servico").hasRole("TECNICO")
                         .requestMatchers(HttpMethod.GET, "/relatorio/{id}", "/relatorio").hasAnyRole("TECNICO", "ADMINISTRADOR")
-
                         .anyRequest().authenticated())
+                        .anyRequest().permitAll())
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
