@@ -3,6 +3,7 @@ package com.exemple.maintenance_system_api.services;
 import com.exemple.maintenance_system_api.domain.model.OrdemServico;
 import com.exemple.maintenance_system_api.domain.model.Funcionario;
 import com.exemple.maintenance_system_api.domain.model.Equipamento;
+import com.exemple.maintenance_system_api.domain.model.enums.StatusOrdemServico;
 import com.exemple.maintenance_system_api.repositories.FuncionarioRepository;
 import com.exemple.maintenance_system_api.repositories.OrdemServicoRepository;
 import com.exemple.maintenance_system_api.repositories.EquipamentoRepository;
@@ -36,7 +37,7 @@ public class OrdemServicoService {
         OrdemServico ordemServico = new OrdemServico();
 
         ordemServico.setDescricao(ordemServicoCreateDTO.descricao());
-        ordemServico.setStatus(ordemServicoCreateDTO.status());
+        ordemServico.setStatus(StatusOrdemServico.ABERTA);
         ordemServico.setTipoManuntencao(ordemServicoCreateDTO.tipoManuntencao());
         Equipamento equipamento = equipamentoRepository.findById(ordemServicoCreateDTO.equipamento().getId())
                 .orElseThrow(() -> new RuntimeException("Equipamento não encontrado"));
@@ -48,6 +49,20 @@ public class OrdemServicoService {
 
         return ordemServicoRepository.save(ordemServico);
     }
+
+    @Transactional
+    public OrdemServico fechar(Long id) {
+        OrdemServico ordem = ordemServicoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Ordem de Serviço não encontrada"));
+
+        if (ordem.getStatus() == StatusOrdemServico.CONCLUIDA) {
+            throw new RuntimeException("Ordem já está concluída");
+        }
+
+        ordem.setStatus(StatusOrdemServico.CONCLUIDA);
+        return ordemServicoRepository.save(ordem);
+    }
+
 
     @Transactional
     public void deletar(Long id) {
@@ -64,5 +79,9 @@ public class OrdemServicoService {
     public List<OrdemServico> listar() {
         log.info("Listando todas as ordens de serviço");
         return ordemServicoRepository.findAll();
+    }
+
+    public List<OrdemServico> listarAbertas() {
+        return ordemServicoRepository.findByStatus(StatusOrdemServico.ABERTA);
     }
 }
