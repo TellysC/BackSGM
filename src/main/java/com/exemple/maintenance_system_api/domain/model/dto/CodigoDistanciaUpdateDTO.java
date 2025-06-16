@@ -1,6 +1,7 @@
 package com.exemple.maintenance_system_api.domain.model.dto;
 
 public record CodigoDistanciaUpdateDTO(String numero, String estado) {
+
     public CodigoDistanciaUpdateDTO {
         if (numero == null || numero.isBlank()) {
             throw new IllegalArgumentException("Número não pode ser nulo ou em branco");
@@ -9,4 +10,5 @@ public record CodigoDistanciaUpdateDTO(String numero, String estado) {
             throw new IllegalArgumentException("Estado não pode ser nulo ou em branco");
         }
     }
+
 }

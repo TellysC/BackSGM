@@ -2,10 +2,8 @@ package com.exemple.maintenance_system_api.services;
 
 import com.exemple.maintenance_system_api.domain.model.CodigoDistancia;
 import com.exemple.maintenance_system_api.domain.model.Contato;
-import com.exemple.maintenance_system_api.domain.model.dto.CodigoDistanciaCreateDTO;
 import com.exemple.maintenance_system_api.domain.model.dto.ContatoCreateDTO;
 import com.exemple.maintenance_system_api.domain.model.dto.ContatoUpdateDTO;
-import com.exemple.maintenance_system_api.excption.IdException;
 import com.exemple.maintenance_system_api.repositories.CodigoDistanciaRepository;
 import com.exemple.maintenance_system_api.repositories.ContatoRepository;
 import jakarta.transaction.Transactional;
@@ -41,7 +39,7 @@ public class ContatoService {
 
     @Transactional
     public Contato atualizar(long id, ContatoUpdateDTO contatoUpdateDTO) {
-        Contato contato = contatoRepository.findById(id).get();
+        Contato contato = contatoRepository.findById(id).orElseThrow(() -> new RuntimeException("Contato não encontrado"));
         contato.setCelular(contatoUpdateDTO.celular());
         contato.setTelefone(contatoUpdateDTO.telefone());
         log.info("Atualizando contato com celular: {} e telefone: {}", contatoUpdateDTO.celular(), contatoUpdateDTO.telefone());

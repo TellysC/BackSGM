@@ -1,5 +1,8 @@
 package com.exemple.maintenance_system_api.domain.model.dto;
 
+
+public record FuncionarioCreateDTO (String nome, String cpf, UsuarioRegisterDTO usuarioRegisterDTO, EnderecoCreateDTO enderecoCreateDTO, ContatoCreateDTO contatoCreateDTO) {
+
 import com.exemple.maintenance_system_api.domain.model.enums.Cargo;
 
 public record FuncionarioCreateDTO (String nome, Cargo cargo, String cpf, UsuarioRegisterDTO usuarioRegisterDTO, EnderecoCreateDTO enderecoCreateDTO, ContatoCreateDTO contatoCreateDTO) {
@@ -23,4 +26,5 @@ public record FuncionarioCreateDTO (String nome, Cargo cargo, String cpf, Usuari
             throw new IllegalArgumentException("Contato não pode ser nulo");
         }
     }
+
 }

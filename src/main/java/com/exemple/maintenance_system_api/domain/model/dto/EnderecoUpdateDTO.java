@@ -1,6 +1,7 @@
 package com.exemple.maintenance_system_api.domain.model.dto;
 
 public record EnderecoUpdateDTO (String logradouro, String numero, String bairro, String cidade, String estado, String cep, String pais) {
+
     public EnderecoUpdateDTO {
         if (logradouro == null || logradouro.isBlank()) {
             throw new IllegalArgumentException("Logradouro não pode ser nulo ou em branco");
@@ -24,4 +25,5 @@ public record EnderecoUpdateDTO (String logradouro, String numero, String bairro
             throw new IllegalArgumentException("País não pode ser nulo ou em branco");
         }
     }
+
 }

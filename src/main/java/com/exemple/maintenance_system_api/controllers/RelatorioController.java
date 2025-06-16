@@ -16,7 +16,7 @@ public class RelatorioController {
 
     private final RelatorioService relatorioService;
 
-    @PostMapping("/criar")
+    @PostMapping("/ordem-servico")
     public ResponseEntity<Relatorio> criar(@RequestBody RelatorioCreateDTO relatorioCreateDTO) {
         Relatorio relatorio = relatorioService.criar(relatorioCreateDTO);
         return ResponseEntity.status(201).body(relatorio);

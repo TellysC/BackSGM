@@ -35,7 +35,7 @@ public class EnderecoService {
 
     @Transactional
     public Endereco atualizar(Long id, EnderecoUpdateDTO enderecoUpdateDTO) {
-        Endereco endereco = enderecoRepository.findById(id).orElse(null);
+        Endereco endereco = enderecoRepository.findById(id).orElseThrow(() -> new RuntimeException("Endereço não encontrado"));
         endereco.setLogradouro(enderecoUpdateDTO.logradouro());
         endereco.setNumero(enderecoUpdateDTO.numero());
         endereco.setBairro(enderecoUpdateDTO.bairro());
