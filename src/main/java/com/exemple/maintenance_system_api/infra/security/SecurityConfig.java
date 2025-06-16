@@ -13,9 +13,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.filter.CorsFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -24,40 +21,37 @@ public class SecurityConfig {
     SecurityFilter securityFilter;
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http, SecurityFilter securityFilter) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception { // Removido o securityFilter daqui para usar o @Autowired da classe
         return http
-                .cors(cors -> {}) // ✅ ATIVA o suporte a CORS
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(HttpMethod.POST, "/auth/login","/auth/register").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/funcionario/criar", "/equipamento/criar").hasRole("ADMINISTRADOR")
-                        .requestMatchers(HttpMethod.DELETE, "/funcionario/{id}", "/equipamento/{id}").hasRole("ADMINISTRADOR")
-                        .requestMatchers(HttpMethod.PUT, "/funcionario/{id}", "/equipamento/{id}").hasRole("ADMINISTRADOR")
+                        // Endpoints públicos
+                        .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
+
+                        // Endpoints de Administrador
+                        .requestMatchers("/funcionario/**").hasRole("ADMINISTRADOR")
+                        .requestMatchers("/equipamento/**").hasRole("ADMINISTRADOR")
+                        .requestMatchers(HttpMethod.GET, "/relatorio/**").hasRole("ADMINISTRADOR") // Admin pode ver todos relatórios
+
+                        // Endpoints de Técnico
+                        .requestMatchers(HttpMethod.POST, "/relatorio/ordem-servico").hasRole("TECNICO")
+                        .requestMatchers(HttpMethod.PUT, "/ordem-servico/{id}/fechar").hasAnyRole("TECNICO", "ADMINISTRADOR")
+                        .requestMatchers(HttpMethod.GET, "/ordem-servico/abertas").hasAnyRole("TECNICO", "ADMINISTRADOR")
+
+                        // Endpoints de Cliente
                         .requestMatchers(HttpMethod.POST, "/ordem-servico/criar").hasRole("CLIENTE")
-                        .requestMatchers(HttpMethod.GET, "/ordem-servico/{id}","/ordem-servico", "ordem-servico/abertas").hasAnyRole("TECNICO", "ADMINISTRADOR")
-                        .requestMatchers(HttpMethod.POST, "relatorio/ordem-servico").hasRole("TECNICO")
-                        .requestMatchers(HttpMethod.PUT, "ordem-servico/fechar").hasAnyRole("TECNICO", "ADMINISTRADOR")
-                        .requestMatchers(HttpMethod.GET, "/relatorio/{id}", "/relatorio").hasAnyRole("TECNICO", "ADMINISTRADOR")
-                        .anyRequest().authenticated())
+
+                        // Qualquer outra requisição precisa estar autenticada
+                        .anyRequest().authenticated()
+                )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 
-
-    @Bean
-    public CorsFilter corsFilter() {
-        CorsConfiguration config = new CorsConfiguration();
-        config.addAllowedOrigin("http://127.0.0.1:5500"); // Ou use "*" no dev
-        config.addAllowedHeader("*");
-        config.addAllowedMethod("*");
-        config.setAllowCredentials(true);
-
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", config);
-
-        return new CorsFilter(source);
-    }
+    // O bean do CorsFilter não é mais necessário aqui se você usar @CrossOrigin nos controllers,
+    // mas se quiser uma configuração central, mantenha-o e remova os @CrossOrigin individuais.
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
@@ -68,5 +62,4 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
 }
