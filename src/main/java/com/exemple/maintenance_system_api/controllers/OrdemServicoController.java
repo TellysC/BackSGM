@@ -13,7 +13,6 @@ import java.util.List;
 
 @RequestMapping("/ordem-servico")
 @RestController
-@CrossOrigin("*")
 @RequiredArgsConstructor
 
 public class OrdemServicoController {

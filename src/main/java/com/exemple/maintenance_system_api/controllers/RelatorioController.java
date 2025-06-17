@@ -11,7 +11,6 @@ import java.util.List;
 
 @RequestMapping("/relatorio")
 @RestController
-@CrossOrigin("*")
 @RequiredArgsConstructor
 public class RelatorioController {
 

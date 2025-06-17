@@ -12,7 +12,6 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@CrossOrigin("*")
 @RequestMapping("/equipamento")
 public class EquipamentoController {
 

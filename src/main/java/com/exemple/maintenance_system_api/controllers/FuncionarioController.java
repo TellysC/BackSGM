@@ -13,7 +13,6 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@CrossOrigin("*")
 @RequestMapping("/funcionario")
 public class FuncionarioController {
 
