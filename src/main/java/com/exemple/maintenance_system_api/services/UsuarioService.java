@@ -43,8 +43,10 @@ public class UsuarioService {
     public Usuario atualizar(Long id, UsuarioRegisterDTO usuarioUpdateDTO) {
         Usuario usuario = usuarioRepository.findById(id).orElseThrow(() -> new IdException("Usuário não encontrado"));
         usuario.setEmail(usuarioUpdateDTO.email());
-        String senhaCriptografada = passwordEncoder.encode(usuarioUpdateDTO.senha());
-        usuario.setSenha(senhaCriptografada);
+        if (usuarioUpdateDTO.senha() != null && !usuarioUpdateDTO.senha().isBlank()) {
+            String senhaCriptografada = passwordEncoder.encode(usuarioUpdateDTO.senha());
+            usuario.setSenha(senhaCriptografada);
+        }
         usuario.setRole(usuarioUpdateDTO.role());
 
         return usuarioRepository.save(usuario);

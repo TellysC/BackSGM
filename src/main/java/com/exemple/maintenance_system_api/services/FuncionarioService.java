@@ -72,7 +72,8 @@ public class FuncionarioService {
         funcionario.setNome(funcionarioUpdateDTO.nome());
         funcionario.setCpf(funcionarioUpdateDTO.cpf());
         funcionario.getUsuario().setEmail(funcionarioUpdateDTO.usuarioRegisterDTO().email());
-        funcionario.getUsuario().setSenha(funcionarioUpdateDTO.usuarioRegisterDTO().senha());
+        String senhaCriptografada = passwordEncoder.encode(funcionarioUpdateDTO.usuarioRegisterDTO().senha());
+        funcionario.getUsuario().setSenha(senhaCriptografada);
         funcionario.getUsuario().setRole(funcionarioUpdateDTO.usuarioRegisterDTO().role());
         funcionario.getEndereco().setBairro(funcionarioUpdateDTO.enderecoUpdateDTO().bairro());
         funcionario.getEndereco().setCep(funcionarioUpdateDTO.enderecoUpdateDTO().cep());

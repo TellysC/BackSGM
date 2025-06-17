@@ -33,7 +33,7 @@ public class FuncionarioController {
 
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletar(@RequestBody Long id) {
+    public ResponseEntity<Void> deletar(@PathVariable Long id) {
         funcionarioService.deletar(id);
         return ResponseEntity.noContent().build();
     }

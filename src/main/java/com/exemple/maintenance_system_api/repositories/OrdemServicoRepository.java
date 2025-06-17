@@ -10,4 +10,6 @@ import java.util.List;
 @Repository
 public interface OrdemServicoRepository extends JpaRepository<OrdemServico, Long> {
     List<OrdemServico> findByStatus(StatusOrdemServico status);
+    List<OrdemServico> findByFuncionarioId(Long funcionarioId); //
+    List<OrdemServico> findByFuncionarioIdAndStatus(Long funcionarioId, StatusOrdemServico status); //
 }

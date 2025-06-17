@@ -20,7 +20,6 @@ import java.util.List;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-
 public class OrdemServicoService {
 
     @Autowired
@@ -83,5 +82,65 @@ public class OrdemServicoService {
 
     public List<OrdemServico> listarAbertas() {
         return ordemServicoRepository.findByStatus(StatusOrdemServico.ABERTA);
+    }
+
+    // Métodos que buscam por funcionarioId (utilizados internamente pelos métodos *DoUsuario)
+    @Transactional
+    public List<OrdemServico> listarPorFuncionario(Long funcionarioId) {
+        log.info("Listando ordens de serviço para o funcionário com ID: {}", funcionarioId);
+        List<OrdemServico> ordens = ordemServicoRepository.findByFuncionarioId(funcionarioId);
+        log.debug("Repositorio retornou {} ordens para o funcionario ID: {}", ordens.size(), funcionarioId);
+        return ordens;
+    }
+
+    @Transactional
+    public List<OrdemServico> listarAbertasPorFuncionario(Long funcionarioId) {
+        log.info("Listando ordens de serviço abertas para o funcionário com ID: {}", funcionarioId);
+        List<OrdemServico> ordens = ordemServicoRepository.findByFuncionarioIdAndStatus(funcionarioId, StatusOrdemServico.ABERTA);
+        log.debug("Repositorio retornou {} ordens ABERTAS para o funcionario ID: {}", ordens.size(), funcionarioId);
+        return ordens;
+    }
+
+    @Transactional
+    public List<OrdemServico> listarConcluidasPorFuncionario(Long funcionarioId) {
+        log.info("Listando ordens de serviço concluídas para o funcionário com ID: {}", funcionarioId);
+        List<OrdemServico> ordens = ordemServicoRepository.findByFuncionarioIdAndStatus(funcionarioId, StatusOrdemServico.CONCLUIDA);
+        log.debug("Repositorio retornou {} ordens CONCLUIDAS para o funcionario ID: {}", ordens.size(), funcionarioId);
+        return ordens;
+    }
+
+    // NOVOS MÉTODOS que o Controller espera e que resolvem o FuncionarioId a partir do UsuarioId
+    @Transactional
+    public List<OrdemServico> listarPorFuncionarioDoUsuario(Long usuarioId) {
+        Funcionario funcionario = funcionarioRepository.findByUsuarioId(usuarioId);
+        if (funcionario == null) {
+            log.warn("Nenhum funcionário encontrado para o usuário com ID: {}", usuarioId);
+            return List.of();
+        }
+        log.info("Buscando ordens para o funcionário do usuário ID: {} (Funcionario ID: {})", usuarioId, funcionario.getId());
+        // Chama o método existente que já faz o log de debug do repositório
+        return this.listarPorFuncionario(funcionario.getId());
+    }
+
+    @Transactional
+    public List<OrdemServico> listarAbertasPorFuncionarioDoUsuario(Long usuarioId) {
+        Funcionario funcionario = funcionarioRepository.findByUsuarioId(usuarioId);
+        if (funcionario == null) {
+            log.warn("Nenhum funcionário encontrado para o usuário com ID: {}", usuarioId);
+            return List.of();
+        }
+        log.info("Buscando ordens ABERTAS para o funcionário do usuário ID: {} (Funcionario ID: {})", usuarioId, funcionario.getId());
+        return this.listarAbertasPorFuncionario(funcionario.getId());
+    }
+
+    @Transactional
+    public List<OrdemServico> listarConcluidasPorFuncionarioDoUsuario(Long usuarioId) {
+        Funcionario funcionario = funcionarioRepository.findByUsuarioId(usuarioId);
+        if (funcionario == null) {
+            log.warn("Nenhum funcionário encontrado para o usuário com ID: {}", usuarioId);
+            return List.of();
+        }
+        log.info("Buscando ordens CONCLUIDAS para o funcionário do usuário ID: {} (Funcionario ID: {})", usuarioId, funcionario.getId());
+        return this.listarConcluidasPorFuncionario(funcionario.getId());
     }
 }

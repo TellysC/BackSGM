@@ -4,11 +4,12 @@ import com.exemple.maintenance_system_api.domain.model.Equipamento;
 import com.exemple.maintenance_system_api.domain.model.Funcionario;
 import com.exemple.maintenance_system_api.domain.model.OrdemServico;
 import com.exemple.maintenance_system_api.domain.model.Usuario;
+import com.exemple.maintenance_system_api.domain.model.enums.StatusOrdemServico;
 import com.exemple.maintenance_system_api.domain.model.enums.TipoManuntencao;
 
 
 
-public record OrdemServicoCreateDTO(String descricao, OrdemServico status, TipoManuntencao tipoManuntencao, Funcionario funcionario, Equipamento equipamento, Usuario usuario) {
+public record OrdemServicoCreateDTO(String descricao, StatusOrdemServico status, TipoManuntencao tipoManuntencao, Funcionario funcionario, Equipamento equipamento) {
 
     public OrdemServicoCreateDTO {
         if (descricao == null || descricao.isBlank()) {
@@ -25,9 +26,6 @@ public record OrdemServicoCreateDTO(String descricao, OrdemServico status, TipoM
         }
         if (equipamento == null) {
             throw new IllegalArgumentException("Equipamento não pode ser nulo");
-        }
-        if (usuario == null) {
-            throw new IllegalArgumentException("Usuário não pode ser nulo");
         }
     }
 

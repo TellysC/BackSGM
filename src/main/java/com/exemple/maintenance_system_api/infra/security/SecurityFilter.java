@@ -25,11 +25,18 @@ public class SecurityFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         var token = this.recoverToken(request);
         if(token != null) {
-            var email = tokenService.validateToken(token);
-            UserDetails user = usuarioRepository.findByEmail(email);
+            var email = tokenService.validateToken(token); // Valida o token e retorna o email (ou string vazia se inválido)
 
-            var authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
-            SecurityContextHolder.getContext().setAuthentication(authentication);
+            // Adiciona uma verificação para garantir que o email não é vazio e que o usuário foi encontrado
+            if (!email.isEmpty()) { // Se o token for inválido, o email virá vazio
+                UserDetails user = usuarioRepository.findByEmail(email); // Busca o usuário pelo email
+
+                // CRÍTICO: Verifica se o usuário foi encontrado antes de tentar usar seus métodos
+                if (user != null) {
+                    var authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
+                    SecurityContextHolder.getContext().setAuthentication(authentication);
+                }
+            }
         }
         filterChain.doFilter(request, response);
     }
@@ -39,6 +46,4 @@ public class SecurityFilter extends OncePerRequestFilter {
         if (authorization == null) return null;
         return authorization.replace("Bearer ", "");
     }
-
-
 }

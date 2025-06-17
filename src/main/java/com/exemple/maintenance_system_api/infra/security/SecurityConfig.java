@@ -40,14 +40,21 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.DELETE, "/funcionario/{id}", "/equipamento/{id}").hasRole("ADMINISTRADOR")
                         .requestMatchers(HttpMethod.PUT, "/funcionario/{id}", "/equipamento/{id}").hasRole("ADMINISTRADOR")
 
-                        // Endpoints específicos para CLIENTE
+                        // Endpoints específicos para CLIENTE e TÉCNICO (agora TÉCNICO também pode acessar suas ordens)
                         .requestMatchers(HttpMethod.POST, "/ordem-servico/criar").hasRole("CLIENTE")
+                        .requestMatchers(HttpMethod.GET, "/ordem-servico/minhas-criadas", "/ordem-servico/minhas-abertas", "/ordem-servico/minhas-concluidas").hasAnyRole("CLIENTE", "TECNICO") // ADICIONADO: TECNICO pode ver suas ordens
 
-                        // Endpoints específicos para TÉCNICO e ADMINISTRADOR
+
+                        // Endpoints específicos para TÉCNICO e ADMINISTRADOR (visão geral/gerenciamento)
                         .requestMatchers(HttpMethod.GET, "/ordem-servico/{id}", "/ordem-servico", "/ordem-servico/abertas").hasAnyRole("TECNICO", "ADMINISTRADOR")
                         .requestMatchers(HttpMethod.POST, "/relatorio/ordem-servico").hasRole("TECNICO")
                         .requestMatchers(HttpMethod.PUT, "/ordem-servico/fechar").hasAnyRole("TECNICO", "ADMINISTRADOR")
                         .requestMatchers(HttpMethod.GET, "/relatorio/{id}", "/relatorio").hasAnyRole("TECNICO", "ADMINISTRADOR")
+
+                        // Permissão para USUÁRIOS (CLIENTE, TECNICO, ADM) listar equipamentos e usuários (para contagem)
+                        .requestMatchers(HttpMethod.GET, "/equipamento").authenticated() // Já permitia
+                        .requestMatchers(HttpMethod.GET, "/usuario").authenticated() // NOVO: Permitir a usuários autenticados listar usuários (para contagem)
+
 
                         // Qualquer outra requisição deve ser autenticada
                         .anyRequest().authenticated()
